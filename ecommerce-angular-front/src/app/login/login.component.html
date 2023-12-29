@@ -1,0 +1,38 @@
+<div class="main-content">
+    <div class="section-content section-content-p30">
+        <h1>Login Page by Angular</h1>
+        <hr>
+
+        <div class="justify-content-center align-items-center">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label>Username : </label>
+                    <input [class.is-invalid]="username.invalid && (username.touched || hasSubmitted)"
+                        formControlName="username" type="text" class="form-control" placeholder="Enter Username">
+                    <div *ngIf="username.invalid && (username.touched || hasSubmitted)">
+                        <small *ngIf="username.errors?.required" class="text-danger">Username is required</small>
+                        <small *ngIf="username.errors?.pattern" class="text-danger">There should not be any special
+                            character in username</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Password : </label>
+                    <input [class.is-invalid]="password.invalid && (password.touched || hasSubmitted)"
+                        formControlName="password" type="password" class="form-control" placeholder="Enter Password"
+                        id="password" autocomplete="off">
+                    <div *ngIf="password.invalid && (password.touched || hasSubmitted)">
+                        <small *ngIf="password.errors?.required" class="text-danger">Password is required</small>
+                        <small *ngIf="password.errors?.minlength" class="text-danger">Password should be minimum 6
+                            characters</small>
+                    </div>
+                </div>
+
+                <button routerLink="/reg" type="button" class="btn btn-secondary m-2">Not Registered? Register
+                    Here</button>
+                <input type="submit" class="btn btn-primary float-right m-2" value="Login">
+            </form>
+
+        </div>
+    </div>
+</div>

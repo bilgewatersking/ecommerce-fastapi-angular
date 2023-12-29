@@ -1,0 +1,103 @@
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from typing import List
+from models import MenuItem, CartItem, User
+
+app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Mock database for demonstration
+menu_db = [{"id": 1, "name": "Margherita", "unitPrice": 10.00, "description": "sattapadi 1", "imageUrl":"https://m.media-amazon.com/images/M/MV5BMjE4ODY1ODg1NV5BMl5BanBnXkFtZTcwMzY3MTMwNw@@._V1_.jpg"},
+           {"id": 2, "name": "Pepperoni", "unitPrice": 69.42, "description": "sattapadi 1", "imageUrl":"https://i.pinimg.com/736x/a3/3c/7d/a33c7db011902cee33a9b1808b25f275.jpg"}]
+carts_db = {}
+
+db: List[User] = [
+    User(
+        username="Jamila",
+        password="Ahmed",
+
+    ),
+    User(
+        username="Alex",
+        password="Jones",
+    ),
+]
+# User Registration
+@app.post("/register/")
+def register_user(new_user: User):
+    for user in db:
+        if user.username == new_user.username:
+            raise HTTPException(status_code=400, detail="Username already exists")
+    db.append(new_user)
+    # db[user.username] = user
+    return {"message": "User registered successfully"}
+
+# # User Registration
+# @app.post("/register/")
+# def register_user(user: User):
+#     for user in db:
+#         if user.username == user:
+#             raise HTTPException(status_code=400, detail="Username already exists")
+#     User[user.username] = user
+#     return {"message": "User registered successfully"}
+
+# User Login
+@app.post("/login/")
+def login_user(entered_user: User):
+    for user in db:
+        if user.username == entered_user.username and user.password == entered_user.password:
+            return {"message": "Login successful."}
+    raise HTTPException(status_code=401, detail="Login failed. Invalid username or password.")
+    
+
+@app.get("/user/")
+async def fetch_users():
+    return db
+
+# View Menu
+@app.get("/menu/", response_model=List[MenuItem])
+def get_menu():
+    return menu_db
+
+# Add Item to Cart
+@app.post("/cart/add/")
+def add_to_cart(cart_item: CartItem):
+    if cart_item.user_id not in carts_db:
+        carts_db[cart_item.user_id] = []
+    carts_db[cart_item.user_id].append(cart_item)
+    return {"message": "Item added to cart"}
+
+# View Cart
+@app.get("/cart/{user_id}/", response_model=List[CartItem])
+def view_cart(user_id: str):
+    return carts_db.get(user_id, [])
+
+# Delete Item from Cart
+@app.delete("/cart/delete/")
+def delete_from_cart(user_id: str, item_id: int):
+    if user_id in carts_db:
+        carts_db[user_id] = [item for item in carts_db[user_id] if item.item_id != item_id]
+    return {"message": "Item removed from cart"}
+
+# Checkout Cart
+@app.post("/cart/checkout/{user_id}/")
+def checkout_cart(user_id: str):
+    if user_id not in carts_db:
+        raise HTTPException(status_code=404, detail="Cart not found")
+    # Implement payment and order processing here
+    del carts_db[user_id]
+    return {"message": "Checkout successful"}
+
+# Start the server
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)
