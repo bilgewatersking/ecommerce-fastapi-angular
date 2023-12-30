@@ -1,10 +1,10 @@
 <div class="main-content">
     <div class="section-content section-content-p30">
-        <h1>Login Page</h1>
+        <h1>Register Page</h1>
         <hr>
 
         <div class="justify-content-center align-items-center">
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                     <label>Username : </label>
                     <input [class.is-invalid]="username.invalid && (username.touched || hasSubmitted)"
@@ -28,9 +28,9 @@
                     </div>
                 </div>
 
-                <button routerLink="/register" type="button" class="btn btn-secondary m-2">Not Registered? Register
+                <button routerLink="/login" type="button" class="btn btn-secondary m-2">Have an account? Login Here
                     Here</button>
-                <input type="submit" class="btn btn-primary float-right m-2" value="Login">
+                <input type="submit" class="btn btn-primary float-right m-2" value="Register">
             </form>
 
         </div>

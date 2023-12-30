@@ -8,7 +8,7 @@ class User(BaseModel):
     password: str
 
 class MenuItem(BaseModel):
-    id: int
+    id: str
     name: str
     unitPrice: float
     description: str

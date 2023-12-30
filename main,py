@@ -1,9 +1,12 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 from models import MenuItem, CartItem, User
+from fastapi.responses import JSONResponse
+#import stripe
 
 app = FastAPI()
+#stripe.api_key = 'pk_test_51OT6SiGeF8mfOk0r8bSU7nsxvfCIVIyRXA7YaQNQWrvXZ8XzntBOqZuPHA3tWuKbpVHKwwTAHNihb0a9hcLbcSTQ003uEz4Qh6'
 
 origins = ["*"]
 
@@ -16,8 +19,8 @@ app.add_middleware(
 )
 
 # Mock database for demonstration
-menu_db = [{"id": 1, "name": "Margherita", "unitPrice": 10.00, "description": "sattapadi 1", "imageUrl":"https://m.media-amazon.com/images/M/MV5BMjE4ODY1ODg1NV5BMl5BanBnXkFtZTcwMzY3MTMwNw@@._V1_.jpg"},
-           {"id": 2, "name": "Pepperoni", "unitPrice": 69.42, "description": "sattapadi 1", "imageUrl":"https://i.pinimg.com/736x/a3/3c/7d/a33c7db011902cee33a9b1808b25f275.jpg"}]
+menu_db = [{"id": "price_1OT6elGeF8mfOk0rlWg1P0xu", "name": "Margherita", "unitPrice": 3.50, "description": "sattapadi 1", "imageUrl":"https://www.yumcurry.com/wp-content/uploads/2020/06/pizza-margherita-recipe.jpg"},
+           {"id": "price_1OT6f2GeF8mfOk0rlU1mZ78Z", "name": "Pepperoni", "unitPrice": 5.00, "description": "sattapadi 1", "imageUrl":"https://lilluna.com/wp-content/uploads/2023/01/homemade-pizza3-resize-13.jpg"}]
 carts_db = {}
 
 db: List[User] = [
@@ -68,6 +71,14 @@ async def fetch_users():
 def get_menu():
     return menu_db
 
+# Get item from menu
+@app.get("/menu/{item_id}")
+async def get_menu_item(item_id: str):
+    for item in menu_db:
+        if item["id"] == item_id:
+            return item
+    return JSONResponse(status_code=404, content={"message": "Item not found"})    
+
 # Add Item to Cart
 @app.post("/cart/add/")
 def add_to_cart(cart_item: CartItem):
@@ -96,6 +107,27 @@ def checkout_cart(user_id: str):
     # Implement payment and order processing here
     del carts_db[user_id]
     return {"message": "Checkout successful"}
+
+# Payment after checkout
+# @app.post("/payment-webhook")
+# async def payment_webhook(request: Request):
+#     payload = await request.json()
+#     event = None
+
+#     try:
+#         event = stripe.Event.construct_from(
+#             payload, stripe.api_key, stripe.api_version
+#         )
+#     except ValueError as e:
+#         return JSONResponse(status_code=400, content={"error": str(e)})
+
+#     # Handle different event types
+#     if event.type == 'checkout.session.completed':
+#         # Payment successful, perform necessary actions
+#         # e.g., update database, send confirmation email, etc.
+#         # Access the payment details using event.data.object
+
+#         return JSONResponse(status_code=200)
 
 # Start the server
 if __name__ == "__main__":

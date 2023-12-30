@@ -5,10 +5,12 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ProductDetailsComponent } from './products/product-details/product-details.component';
 import { CartDetailsComponent } from './cart/cart-details/cart-details.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {path: 'checkout', component: CheckoutComponent},
+  {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'cart', component: CartDetailsComponent},
   {path: 'search/:keyword', component: ProductListComponent},

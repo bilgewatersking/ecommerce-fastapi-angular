@@ -92,4 +92,8 @@ export class ProductService {
     const body = { username, password };
     return this.http.post<any>("http://127.0.0.1:8000/login/", body);
   }
+  register(username: string, password: string): Observable<any> {
+    const body = { username, password };
+    return this.http.post<any>("http://127.0.0.1:8000/register/", body);
+  }
 }

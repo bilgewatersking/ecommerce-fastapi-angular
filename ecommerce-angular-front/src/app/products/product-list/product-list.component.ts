@@ -35,9 +35,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    location.reload()
     console.log(this.productService.getMenuList())
-    debugger
     this.productService.getMenuList().subscribe(
       (data) => {
         this.products = data;
@@ -47,7 +45,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
       }
     );
     this.productService.getMenuList().subscribe(test => {
-      debugger
       console.log(test)
     });
     this.paramsSubscription = this.route.paramMap.subscribe(() => {

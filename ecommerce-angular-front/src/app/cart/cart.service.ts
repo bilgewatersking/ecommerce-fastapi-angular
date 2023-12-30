@@ -10,7 +10,8 @@ export class CartService {
   cartItems: CartItem[] = [];
   totalPrice = new Subject<number>();
   totalQuantity = new Subject<number>();
-
+  checkOutPrice: number = 0;
+  checkOutQuantity: number = 0;
   constructor() {
   }
 
@@ -51,6 +52,8 @@ export class CartService {
     // Publish the new totals
     this.totalPrice.next(totalPrice);
     this.totalQuantity.next(totalQuantity);
+    this.checkOutPrice = totalPrice;
+    this.checkOutQuantity = totalQuantity;
   }
 
   getCartItems(): CartItem[] {

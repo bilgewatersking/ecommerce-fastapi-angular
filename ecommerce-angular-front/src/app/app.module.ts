@@ -14,6 +14,7 @@ import { ProductDetailsComponent } from './products/product-details/product-deta
 import { CartStatusComponent } from './cart/cart-status/cart-status.component';
 import { CartDetailsComponent } from './cart/cart-details/cart-details.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { LoginComponent } from './login/login.component';
     CartStatusComponent,
     CartDetailsComponent,
     CheckoutComponent, 
+    RegisterComponent,
     LoginComponent
   ],
   imports: [

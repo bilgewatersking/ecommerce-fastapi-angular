@@ -95,7 +95,7 @@
         </div>
 
         <!-- Billing address form group -->
-        <div formGroupName="billingAddress" class="form-area">
+        <!-- <div formGroupName="billingAddress" class="form-area">
           <h3>Billing Address</h3>
           <div class="row">
             <div class="col-md-3">
@@ -139,10 +139,10 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Credit card info -->
-        <div formGroupName="creditCard" class="form-area">
+        <!-- <div formGroupName="creditCard" class="form-area">
           <h3>Credit Card</h3>
           <div class="row">
             <div class="col-md-3">
@@ -212,7 +212,7 @@
             </div>
           </div>
 
-        </div>
+        </div> -->
 
         <!-- Order details -->
         <div class="form-area">
@@ -224,8 +224,10 @@
 
         <!-- Submit button -->
         <div class="text-center mb-5">
-          <button type="submit" class="btn btn-info">Purchase</button>
+          <!-- <button type="submit" class="btn btn-info">Purchase</button> -->
+          <button (click)="initiatePayment()" class="btn btn-info">Pay Now</button>
         </div>
+        
 
       </form>
 
