@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { CartItem } from './cart-item.model';
+import { Order } from '../products/models/order.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ export class CartService {
   totalQuantity = new Subject<number>();
   checkOutPrice: number = 0;
   checkOutQuantity: number = 0;
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
   addToCart(cartItem: CartItem) {
@@ -76,5 +78,9 @@ export class CartService {
       this.cartItems.splice(cartIndex, 1);
       this.computeCartTotals();
     }
+  }
+  
+  checkout(order: Order): Observable<any> {
+    return this.http.post<any>("http://127.0.0.1:8000/checkout/", order);
   }
 }

@@ -7,6 +7,7 @@ import { CartDetailsComponent } from './cart/cart-details/cart-details.component
 import { CheckoutComponent } from './checkout/checkout.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { OrderSuccessComponent } from './products/order-success/order-success.component';
 
 const routes: Routes = [
   {path: 'checkout', component: CheckoutComponent},
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'categories', component: ProductListComponent},
   {path: 'products/:id', component: ProductDetailsComponent},
   {path: 'products', component: ProductListComponent},
+  {path: 'order-success', component: OrderSuccessComponent},
   {path: '', redirectTo: '/products', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 ];

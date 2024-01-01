@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-
+from typing import List
 
 
 class User(BaseModel):
@@ -19,5 +19,10 @@ class CartItem(BaseModel):
     item_id: int
     quantity: int
 
+class OrderItem(BaseModel):
+    id: str
+    quantity: int
 
-
+class Order(BaseModel):
+    totalPrice: float
+    orderItem: List[OrderItem]

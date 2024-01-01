@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -6,6 +6,7 @@ import { GetResponseProducts, ProductService } from '../product.service';
 import { Product } from '../models/product.model';
 import { CartService } from '../../cart/cart.service';
 import { CartItem } from '../../cart/cart-item.model';
+import { CheckoutComponent } from 'src/app/checkout/checkout.component';
 
 @Component({
   selector: 'app-product-list',
@@ -15,6 +16,7 @@ import { CartItem } from '../../cart/cart-item.model';
 export class ProductListComponent implements OnInit, OnDestroy {
   private readonly ID = 'id';
   private readonly KEYWORD = 'keyword';
+  @ViewChild(CheckoutComponent) checkoutComponent: CheckoutComponent;
 
   products: Product[];
   searchMode: boolean;
@@ -32,10 +34,18 @@ export class ProductListComponent implements OnInit, OnDestroy {
   constructor(private productService: ProductService,
               private cartService: CartService,
               private route: ActivatedRoute) {
+                // this.checkoutComponent.purchaseSuccess.subscribe(() => {
+                //   this.successfulPurchase();
+                // });
   }
 
+  ngAfterViewInit(): void {
+    this.checkoutComponent.purchaseSuccess.subscribe(() => {
+      this.successfulPurchase();
+    });
+}
+
   ngOnInit(): void {
-    console.log(this.productService.getMenuList())
     this.productService.getMenuList().subscribe(
       (data) => {
         this.products = data;
@@ -44,9 +54,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
         console.log(error);
       }
     );
-    this.productService.getMenuList().subscribe(test => {
-      console.log(test)
-    });
     this.paramsSubscription = this.route.paramMap.subscribe(() => {
       this.listProducts();
     });
@@ -132,5 +139,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.productService.getProductCategoryById(categoryId).subscribe(productCategory => {
       this.categoryName = productCategory.categoryName;
     });
+  }
+
+  successfulPurchase() {
+    debugger;
+    alert("Thanks for your order!");
   }
 }

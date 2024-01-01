@@ -16,6 +16,7 @@ import { CartDetailsComponent } from './cart/cart-details/cart-details.component
 import { CheckoutComponent } from './checkout/checkout.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { OrderSuccessComponent } from './products/order-success/order-success.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { LoginComponent } from './login/login.component';
     CartDetailsComponent,
     CheckoutComponent, 
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    OrderSuccessComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ import { LoginComponent } from './login/login.component';
     ReactiveFormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CheckoutComponent]
 })
 export class AppModule {
 }

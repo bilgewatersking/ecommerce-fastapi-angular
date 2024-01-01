@@ -17,7 +17,9 @@
 
           <div class="product-box">
             <a routerLink="/products/{{ product.id }}">
-              <img src="{{ product.imageUrl }}" class="img-fluid">
+              <div class="image-container">
+                <img src="{{ product.imageUrl }}" class="img-fluid">
+              </div>
             </a>
             <a routerLink="/products/{{ product.id }}">
               <h1>{{ product.name }}</h1>

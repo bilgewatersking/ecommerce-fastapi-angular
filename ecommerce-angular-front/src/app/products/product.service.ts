@@ -51,6 +51,15 @@ export class ProductService {
   );
   }
 
+  getMenuById(id): Observable<Product> {
+    //return this.http.get<Product>("http://127.0.0.1:8000/menu/");
+    return this.http.get(`http://127.0.0.1:8000/menu/${id}`).pipe(
+    map((response: any) => {
+      return response as Product;
+    })
+  );
+  }
+
   getProductListByCategory(categoryId: number, page: number, pageSize: number)
     : Observable<GetResponseProducts> {
     return this.getProductsByCondition(
@@ -96,4 +105,5 @@ export class ProductService {
     const body = { username, password };
     return this.http.post<any>("http://127.0.0.1:8000/register/", body);
   }
+
 }
